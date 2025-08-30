@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Осознанные Сновидения - Раскройте Мир Своих Снов</title>
+    <style>
+        /* Общие стили */
+        :root {
+            --primary-color: #483D8B; /* Темно-сланецкий синий */
+            --secondary-color: #6A5ACD; /* Сланцевый синий */
+            --accent-color: #9370DB; /* Средний фиолетовый */
+            --background-start: #1a1a2e; /* Глубокий темно-синий */
+            --background-end: #2c2c54; /* Темно-фиолетовый */
+            --text-color: #E0E0E0; /* Светло-серый */
+            --card-background: rgba(44, 44, 84, 0.5); /* Полупрозрачный темно-фиолетовый */
+            --deep-gray: #111;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(170deg, var(--background-start), var(--background-end));
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden; /* Предотвращаем горизонтальную прокрутку */
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        h1, h2 {
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+            text-shadow: 0 0 5px rgba(106, 90, 205, 0.3);
+        }
+
+        section {
+            padding: 80px 0;
+            position: relative;
+        }
+
+        /* Анимация появления при прокрутке */
+        .reveal {
+            position: relative;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: 1s all ease;
+        }
+
+        .reveal.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+
+        /* Навигационное меню */
+        .navbar {
+            background: rgba(26, 26, 46, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px); /* Для Safari */
+            padding: 0.8rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            transition: background 0.3s ease;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar .logo {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: color 0.3s ease;
+        }
+        .navbar .logo-icon {
+            width: 30px;
+            height: 30px;
+            fill: var(--accent-color);
+            transition: transform 0.4s ease-in-out;
+        }
+        .navbar .logo:hover .logo-icon {
+            transform: rotate(-30deg);
+        }
+
+        .navbar .nav-links {
+            list-style: none;
+            display: flex;
+        }
+
+        .navbar .nav-links li {
+            margin-left: 25px;
+        }
+
+        .navbar .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding-bottom: 5px;
+        }
+        .navbar .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+        .navbar .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        /* Мобильное меню */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .menu-toggle .bar {
+            height: 3px;
+            width: 25px;
+            background-color: white;
+            margin: 4px 0;
+            transition: 0.4s;
+        }
+
+        @media (max-width: 768px) {
+            .navbar .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                background: rgba(26, 26, 46, 0.98);
+                position: absolute;
+                top: 65px;
+                left: 0;
+                text-align: center;
+                padding: 20px 0;
+            }
+            .navbar .nav-links.active { display: flex; }
+            .navbar .nav-links li { margin: 15px 0; }
+            .menu-toggle { display: flex; }
+        }
+
+
+        /* Главный раздел */
+        #hero {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(rgba(26, 26, 46, 0.7), rgba(26, 26, 46, 0.9));
+        }
+        
+        /* Эффект звезд */
+        #stars, #stars2, #stars3 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+            background: transparent;
+        }
+        @function multiple-box-shadow($n) {
+            $value: '#{random(2000)}px #{random(2000)}px #FFF';
+            @for $i from 2 through $n {
+                $value: '#{$value} , #{random(2000)}px #{random(2000)}px #FFF';
+            }
+            @return unquote($value);
+        }
+        .stars-template {
+            width: 1px; height: 1px;
+            background: transparent;
+            box-shadow: multiple-box-shadow(700);
+            animation: animStar 50s linear infinite;
+        }
+        #stars { @extend .stars-template; }
+        #stars2 { @extend .stars-template; width: 2px; height: 2px; animation: animStar 100s linear infinite; }
+        #stars3 { @extend .stars-template; width: 3px; height: 3px; animation: animStar 150s linear infinite; }
+
+        @keyframes animStar {
+            from {transform: translateY(0px);}
+            to {transform: translateY(-2000px);}
+        }
+        /* Примечание: SCSS-функция multiple-box-shadow не будет работать напрямую в CSS.
+           Для CSS мы должны вручную сгенерировать тени.
+           Для простоты примера, я заменю это на CSS анимацию с несколькими div. */
+
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle 5s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .hero-content {
+            max-width: 800px;
+            position: relative;
+            z-index: 2;
+            animation: fadeIn 2s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        #hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: #fff;
+            text-shadow: 2px 2px 10px rgba(147, 112, 219, 0.8);
+        }
+
+        #hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            background: var(--accent-color);
+            color: #fff;
+            padding: 15px 35px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 20px rgba(147, 112, 219, 0.4);
+            border: 2px solid transparent;
+        }
+
+        .cta-button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(106, 90, 205, 0.6);
+        }
+        
+        @media (max-width: 768px) { #hero h1 { font-size: 2.5rem; } }
+
+        /* Раздел "О нас" */
+        #about .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .about-image img {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        .about-image img:hover {
+            transform: scale(1.05) rotate(3deg);
+            box-shadow: 0 20px 45px rgba(0,0,0,0.4);
+        }
+
+        @media (max-width: 768px) {
+            #about .container { grid-template-columns: 1fr; }
+            .about-image { text-align: center; order: -1; margin-bottom: 30px;}
+        }
+
+        /* Раздел с примерами снов */
+        #dreams { background: var(--background-end); }
+
+        .dream-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .dream-card {
+            background: var(--card-background);
+            border: 1px solid var(--secondary-color);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            padding-top: 80px; /* Место для иконки */
+            overflow: hidden;
+        }
+        .dream-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(147, 112, 219, 0.2);
+            border-color: var(--accent-color);
+        }
+        .dream-card .dream-icon {
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            top: 25px;
+            left: 30px;
+            color: var(--accent-color);
+            transition: transform 0.4s ease;
+        }
+        .dream-card:hover .dream-icon {
+            transform: scale(1.2) rotate(-10deg);
+        }
+
+        .dream-card h3 {
+            color: var(--accent-color);
+            margin-bottom: 15px;
+        }
+
+        /* Раздел контактов */
+        #contact { text-align: center; }
+
+        #contact form {
+            max-width: 600px;
+            margin: 40px auto 0;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        #contact input, #contact textarea {
+            width: 100%;
+            padding: 15px;
+            background: var(--card-background);
+            border: 1px solid var(--secondary-color);
+            border-radius: 8px;
+            color: var(--text-color);
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        #contact input:focus, #contact textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 10px rgba(147, 112, 219, 0.3);
+        }
+        #contact textarea { resize: vertical; min-height: 150px; }
+        #contact button {
+            background: var(--accent-color);
+            color: #fff;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+            align-self: center;
+        }
+        #contact button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-3px) scale(1.05);
+        }
+        
+        /* Футер */
+        footer {
+            background: var(--deep-gray);
+            color: #aaa;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 60px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Навигационное меню -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="#hero" class="logo">
+                <!-- SVG Логотип -->
+                <svg class="logo-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M 50 0 A 50 50 0 0 0 50 100 A 40 40 0 0 1 50 0 Z"/>
+                </svg>
+                LucidDream
+            </a>
+            <ul class="nav-links">
+                <li><a href="#hero">Главная</a></li>
+                <li><a href="#about">О нас</a></li>
+                <li><a href="#dreams">Сны</a></li>
+                <li><a href="#contact">Контакты</a></li>
+            </ul>
+            <div class="menu-toggle">
+                <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Главный раздел -->
+    <section id="hero">
+        <div id="stars"></div> <!-- Контейнер для звезд -->
+        <div class="hero-content">
+            <h1>Управляйте Своими Снами. Управляйте Своей Реальностью.</h1>
+            <p>Откройте для себя безграничные возможности осознанных сновидений. Начните свое путешествие в мир, где вы — творец.</p>
+            <a href="#about" class="cta-button">Узнать больше</a>
+        </div>
+    </section>
+
+    <!-- Раздел "О нас" -->
+    <section id="about" class="reveal">
+        <div class="container">
+            <div class="about-content">
+                <h2>Кто мы?</h2>
+                <p>Мы — команда энтузиастов и исследователей сновидений, посвятивших себя изучению и практике осознанных снов. Наша миссия — сделать эту удивительную способность доступной каждому. Мы верим, что осознанные сновидения — это не просто развлечение, а мощный инструмент для самопознания, творчества и личностного роста.</p>
+                <p>Наш курс основан на современных научных исследованиях и проверенных методиках, которые помогут вам безопасно и эффективно освоить навыки управления снами.</p>
+            </div>
+            <div class="about-image">
+                <img src="https://images.unsplash.com/photo-1534237716618-2025b364183d?q=80&w=1887&auto=format&fit=crop" alt="Человек, смотрящий на звездное небо">
+            </div>
+        </div>
+    </section>
+
+    <!-- Раздел с примерами снов -->
+    <section id="dreams" class="reveal">
+        <div class="container">
+            <h2 style="text-align: center;">Галерея Сновидений</h2>
+            <div class="dream-cards">
+                <div class="dream-card reveal">
+                     <div class="dream-icon">
+                        <!-- Иконка Полета (Перо) -->
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M20.354,2.354,1.707,21.001a.5.5,0,0,0,.707.707l18.647-18.647a.5.5,0,0,0-.707-.707ZM8.9,13.725a2.5,2.5,0,0,0,3.325.212l.185.185a.5.5,0,0,0,.707-.707l-.185-.185a2.5,2.5,0,0,0-.212-3.325L2.57,19.256,4.744,21.43,8.9,13.725Zm5.275-5.275L21.88,16.155,19.706,18.33,11.9,10.622a2.5,2.5,0,0,0-3.325-.212l-.185-.185a.5.5,0,0,0-.707.707l.185.185a2.5,2.5,0,0,0,.212,3.325L16.223,4.3,14.05,2.122Z"/></svg>
+                    </div>
+                    <h3>Полет над ночным городом</h3>
+                    <p>Я осознал себя во сне, стоя на крыше небоскреба. Город внизу сиял миллионами огней. Я почувствовал легкость, оттолкнулся и полетел, паря между зданиями, ощущая ветер и полную свободу.</p>
+                </div>
+                <div class="dream-card reveal">
+                    <div class="dream-icon">
+                        <!-- Иконка Подсознания (Голова с идеей) -->
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M12,2A10,10,0,0,0,2,12c0,4.42,2.87,8.17,6.84,9.5c.5.08.66-.21.66-.47c0-.23,0-.84-.01-1.64c-2.78.6-3.37-1.34-3.37-1.34c-.46-1.16-1.11-1.47-1.11-1.47c-.91-.62.07-.6.07-.6c1,.07,1.53,1.03,1.53,1.03c.87,1.5,2.28,1.07,2.84.82c.09-.64.34-1.07.61-1.32C7.22,14.21,4.33,13.1,4.33,9.08c0-1.07.38-1.95,1.03-2.63c-.1-.26-.45-1.25.1-2.6c0,0,.84-.27,2.75,1.02c.8-.22,1.65-.33,2.5-.33s1.7.11,2.5.33c1.91-1.29,2.75-1.02,2.75-1.02c.55,1.35.2,2.34.1,2.6c.65.68,1.03,1.56,1.03,2.63c0,4.03-2.89,5.12-5.67,5.44c.36.31.68.92.68,1.85c0,1.34-.01,2.42-.01,2.75c0,.26.16.55.67.47C19.13,20.17,22,16.42,22,12A10,10,0,0,0,12,2Z"/></svg>
+                    </div>
+                    <h3>Разговор с подсознанием</h3>
+                    <p>Оказавшись в тихой библиотеке, я понял, что сплю. Я задал вслух вопрос о своей жизненной цели, и мудрая фигура, появившаяся из-за стеллажа, дала мне ответ, который изменил мой взгляд на многие вещи.</p>
+                </div>
+                <div class="dream-card reveal">
+                    <div class="dream-icon">
+                        <!-- Иконка Создания (Палитра) -->
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M12,2C6.48,2,2,6.48,2,12s4.48,10,10,10c5.52,0,10-4.48,10-10S17.52,2,12,2z M12,20c-4.41,0-8-3.59-8-8s3.59-8,8-8s8,3.59,8,8S16.41,20,12,20z M14.5,12c0-1.38-1.12-2.5-2.5-2.5S9.5,10.62,9.5,12s1.12,2.5,2.5,2.5S14.5,13.38,14.5,12z M7,12c0-2.76,2.24-5,5-5s5,2.24,5,5c0,2.76-2.24,5-5,5S7,14.76,7,12z M17,7c-.55,0-1,.45-1,1s.45,1,1,1s1-.45,1-1S17.55,7,17,7z M7,7c-.55,0-1,.45-1,1s.45,1,1,1s1-.45,1-1S7.55,7,7,7z"/></svg>
+                    </div>
+                    <h3>Создание собственного мира</h3>
+                    <p>Сон начался в пустой белой комнате. Я осознал это и силой мысли начал создавать окружение: вырастил тропический лес, создал водопад и населил его фантастическими животными. Это было невероятное проявление творчества.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Раздел контактов -->
+    <section id="contact" class="reveal">
+        <div class="container">
+            <h2>Свяжитесь с нами</h2>
+            <p>Есть вопросы или хотите поделиться своим опытом? Напишите нам!</p>
+            <form>
+                <input type="text" placeholder="Ваше имя" required>
+                <input type="email" placeholder="Ваш Email" required>
+                <textarea placeholder="Ваше сообщение" required></textarea>
+                <button type="submit">Отправить</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer>
+        <p>&copy; 2025 LucidDream. Все права защищены.</p>
+    </footer>
+    
+    <script>
+        // --- Мобильное меню ---
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+        
+        // --- Анимация появления при прокрутке ---
+        function reveal() {
+          const reveals = document.querySelectorAll('.reveal');
+          for (let i = 0; i < reveals.length; i++) {
+            const windowHeight = window.innerHeight;
+            const elementTop = reveals[i].getBoundingClientRect().top;
+            const elementVisible = 150; // Расстояние от низа экрана для появления элемента
+
+            if (elementTop < windowHeight - elementVisible) {
+              reveals[i].classList.add('active');
+            } else {
+              reveals[i].classList.remove('active'); // Чтобы анимация повторялась при прокрутке вверх
+            }
+          }
+        }
+        window.addEventListener('scroll', reveal);
+        reveal(); // Запускаем функцию при загрузке, чтобы видеть первый блок
+
+        // --- Создание звезд на главном экране ---
+        function createStars() {
+            const hero = document.getElementById('stars');
+            const starCount = 100; // Количество звезд
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                const size = Math.random() * 3;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.animationDelay = `${Math.random() * 5}s`;
+                star.style.animationDuration = `${Math.random() * 3 + 2}s`;
+                hero.appendChild(star);
+            }
+        }
+        createStars();
+
+    </script>
+
+</body>
+</html>

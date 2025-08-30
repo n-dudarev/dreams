@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Пробудись во сне — Осознанные сновидения</title>
+  <meta name="description" content="Уютный гайд по осознанным сновидениям: что это, примеры снов, как начать и как связаться." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    /* ===== CSS Variables (Palette) ===== */
+    :root {
+      --violet: #7c4dff;        /* основной фиолетовый */
+      --indigo: #536dfe;        /* синий-фиолетовый */
+      --blue:   #3d5afe;        /* яркий синий */
+      --night:  #0f1021;        /* глубокий серый/почти черный */
+      --slate:  #1b1c34;        /* темный серо-синий */
+      --card:   #20224a88;      /* полупрозрачный для стекла */
+      --text:   #e8eaf6;        /* светлый текст */
+      --muted:  #bfc6ff;        /* приглушенный */
+      --accent-gradient: linear-gradient(135deg, var(--violet), var(--blue));
+      --shadow: 0 10px 30px rgba(25, 32, 72, 0.35);
+      --radius: 18px;
+    }
+
+    /* ===== Base ===== */
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(1200px 600px at 20% -10%, #271f54 0%, transparent 60%),
+        radial-gradient(900px 500px at 100% 0%, #1a285e 0%, transparent 55%),
+        radial-gradient(600px 600px at -10% 100%, #2b1d5b 0%, transparent 55%),
+        linear-gradient(180deg, #0b0c1a, #0f1021);
+      min-height: 100dvh;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; border-radius: var(--radius); }
+    section { scroll-margin-top: 90px; }
+
+    /* ===== Container ===== */
+    .container { width: min(1100px, 92%); margin: 0 auto; }
+
+    /* ===== Sticky Nav ===== */
+    .nav {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(180deg, rgba(17,18,39,0.85), rgba(17,18,39,0.55));
+      border-bottom: 1px solid rgba(124,77,255,0.25);
+    }
+    .nav__inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; }
+    .brand { display: flex; gap: 10px; align-items: center; font-weight: 800; letter-spacing: .3px; }
+    .brand__logo {
+      width: 34px; height: 34px; border-radius: 10px; flex: 0 0 34px;
+      background: var(--accent-gradient);
+      box-shadow: 0 6px 18px rgba(124,77,255,.35);
+    }
+    .brand__name { font-size: 1.05rem; }
+
+    /* Desktop menu */
+    .menu { display: flex; gap: 18px; align-items: center; }
+    .menu a { padding: 10px 12px; border-radius: 12px; font-weight: 600; color: var(--muted); }
+    .menu a:hover { color: white; background: #26284c; box-shadow: inset 0 0 0 1px rgba(124,77,255,.35); }
+
+    /* Mobile menu (checkbox hack) */
+    #nav-toggle { display: none; }
+    .hamburger { display: none; width: 38px; height: 38px; border-radius: 12px; place-items: center; border: 1px solid rgba(124,77,255,.35); }
+    .hamburger span { display: block; width: 18px; height: 2px; background: var(--muted); position: relative; }
+    .hamburger span::before, .hamburger span::after { content: ""; position: absolute; left: 0; width: 18px; height: 2px; background: var(--muted); }
+    .hamburger span::before { top: -6px; }
+    .hamburger span::after { top: 6px; }
+
+    .menu--mobile { display: none; flex-direction: column; gap: 6px; padding: 10px 0 18px; }
+    .menu--mobile a { padding: 12px; border-radius: 12px; background: #191a36; }
+
+    #nav-toggle:checked ~ .menu--mobile { display: flex; }
+
+    @media (max-width: 820px) {
+      .menu { display: none; }
+      .hamburger { display: grid; }
+    }
+
+    /* ===== Hero ===== */
+    .hero {
+      padding: clamp(72px, 14dvh, 160px) 0 70px;
+      background:
+        radial-gradient(600px 300px at 80% 20%, rgba(124,77,255,.25), transparent 60%),
+        radial-gradient(700px 300px at 0% 100%, rgba(83,109,254,.18), transparent 60%);
+    }
+    .hero__grid { display: grid; grid-template-columns: 1.25fr 1fr; gap: 40px; align-items: center; }
+    .hero h1 { font-size: clamp(2.1rem, 4.5vw, 3.6rem); margin: 0 0 10px; line-height: 1.08; }
+    .hero p { margin: 0 0 30px; color: var(--muted); font-size: clamp(1rem, 1.5vw, 1.15rem); }
+    .cta {
+      display: inline-block; padding: 14px 22px; border-radius: 14px; font-weight: 700;
+      background: var(--accent-gradient); color: #fff; box-shadow: var(--shadow);
+      transform: translateY(0); transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+    }
+    .cta:hover { transform: translateY(-2px); filter: brightness(1.05); box-shadow: 0 14px 40px rgba(83,109,254,.35); }
+    .hero__art { position: relative; }
+    .glow {
+      position: absolute; inset: -18%; border-radius: 40px; background: radial-gradient(closest-side, rgba(124,77,255,.38), transparent 70%);
+      filter: blur(36px); z-index: 0;
+    }
+    .artbox {
+      position: relative; z-index: 1; border-radius: 28px; overflow: hidden; aspect-ratio: 4/3;
+      background: radial-gradient(circle at 30% 20%, #23265b, #141633);
+      box-shadow: var(--shadow), inset 0 0 0 1px rgba(191,198,255,.12);
+    }
+    .stars { position: absolute; inset: 0; background-image: radial-gradient(#cbd5ff 1px, transparent 1px); background-size: 22px 22px; opacity: .35; animation: drift 40s linear infinite; }
+    @keyframes drift { from { background-position: 0 0; } to { background-position: 200px 200px; } }
+
+    @media (max-width: 920px) { .hero__grid { grid-template-columns: 1fr; } .hero__art { order: -1; } }
+
+    /* ===== Sections ===== */
+    .section { padding: 70px 0; }
+    .section__head { margin-bottom: 26px; }
+    .section__title { font-size: clamp(1.5rem, 3vw, 2.2rem); margin: 0 0 8px; }
+    .section__lead { color: var(--muted); margin: 0; }
+
+    /* ===== Cards (Dream Examples) ===== */
+    .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+    @media (max-width: 1100px) { .cards { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 820px)  { .cards { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px)  { .cards { grid-template-columns: 1fr; } }
+
+    .card {
+      background: linear-gradient(180deg, rgba(32,34,74,.75), rgba(21,22,45,.85));
+      border: 1px solid rgba(191,198,255,.15);
+      border-radius: var(--radius);
+      padding: 14px;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+      transition: transform .2s ease, box-shadow .25s ease, border-color .2s ease;
+    }
+    .card:hover { transform: translateY(-4px); border-color: rgba(124,77,255,.45); box-shadow: var(--shadow); }
+    .card h3 { margin: 10px 6px 6px; font-size: 1.05rem; }
+    .card p { margin: 0 6px 12px; color: var(--muted); font-size: .98rem; }
+    .chip { display: inline-block; font-size: .75rem; padding: 6px 10px; border-radius: 999px; background: #1c1d3c; border: 1px solid rgba(124,77,255,.35); color: #e6e3ff; margin: 0 6px 10px; }
+
+    /* ===== About ===== */
+    .about {
+      display: grid; grid-template-columns: 1.1fr 1fr; gap: 28px; align-items: start;
+    }
+    .about__box {
+      padding: 22px; border-radius: var(--radius); background: linear-gradient(180deg, rgba(32,34,74,.65), rgba(21,22,45,.8));
+      border: 1px solid rgba(191,198,255,.14); box-shadow: inset 0 0 0 1px rgba(191,198,255,.06);
+    }
+    .about__box p { margin: 0 0 10px; color: var(--muted); }
+    .about__list { margin: 14px 0 0 0; padding: 0 0 0 18px; color: var(--muted); }
+    .about__list li { margin-bottom: 8px; }
+    @media (max-width: 920px) { .about { grid-template-columns: 1fr; } }
+
+    /* ===== Contact ===== */
+    .contact {
+      display: grid; grid-template-columns: 1.1fr 1fr; gap: 28px; align-items: start;
+    }
+    .contact__card { padding: 22px; border-radius: var(--radius); background: linear-gradient(180deg, rgba(32,34,74,.65), rgba(21,22,45,.8)); border: 1px solid rgba(191,198,255,.14); }
+    .contact__card h4 { margin: 0 0 10px; }
+    .contact__link { display: inline-flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 12px; background: #191a36; border: 1px solid rgba(124,77,255,.35); margin-right: 10px; margin-bottom: 10px; }
+    .contact__link:hover { background: #1f2146; }
+
+    form { display: grid; gap: 12px; }
+    label { font-size: .95rem; color: var(--muted); }
+    input, textarea { width: 100%; padding: 12px 14px; border-radius: 12px; border: 1px solid rgba(191,198,255,.18); background: #141633; color: var(--text); }
+    input:focus, textarea:focus { outline: none; border-color: rgba(124,77,255,.55); box-shadow: 0 0 0 3px rgba(124,77,255,.18); }
+    textarea { min-height: 120px; resize: vertical; }
+    .btn {
+      justify-self: start; cursor: pointer; border: 0; font-weight: 700; padding: 12px 18px; border-radius: 12px; color: #fff; background: var(--accent-gradient); box-shadow: var(--shadow);
+      transition: transform .2s ease, filter .2s ease, box-shadow .2s ease;
+    }
+    .btn:hover { transform: translateY(-2px); filter: brightness(1.05); box-shadow: 0 14px 40px rgba(83,109,254,.35); }
+
+    /* ===== Footer ===== */
+    footer { padding: 26px 0 40px; color: var(--muted); border-top: 1px solid rgba(124,77,255,.18); background: linear-gradient(0deg, rgba(17,18,39,0.35), rgba(17,18,39,0)); }
+    .foot { display: flex; justify-content: space-between; gap: 14px; align-items: center; }
+    .foot small { opacity: .8; }
+    @media (max-width: 640px) { .foot { flex-direction: column; } }
+
+    /* ===== Accessibility: reduced motion ===== */
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .cta, .card, .btn { transition: none; }
+      .stars { animation: none; }
+    }
+  </style>
+</head>
+<body>
+  <!-- ===== NAVBAR ===== -->
+  <header class="nav" role="banner">
+    <div class="container nav__inner">
+      <a class="brand" href="#hero" aria-label="На главную">
+        <span class="brand__logo" aria-hidden="true"></span>
+        <span class="brand__name">Пробудись во сне</span>
+      </a>
+
+      <nav aria-label="Главная навигация">
+        <div class="menu" role="menubar">
+          <a role="menuitem" href="#about">О нас</a>
+          <a role="menuitem" href="#dreams">Примеры снов</a>
+          <a role="menuitem" href="#contact">Контакты</a>
+        </div>
+
+        <!-- Mobile hamburger -->
+        <label for="nav-toggle" class="hamburger" aria-label="Открыть меню" aria-controls="mobile-menu" aria-expanded="false">
+          <span></span>
+        </label>
+        <input type="checkbox" id="nav-toggle" aria-hidden="true" />
+        <div id="mobile-menu" class="menu--mobile" role="menu">
+          <a role="menuitem" href="#about" onclick="document.getElementById('nav-toggle').checked=false">О нас</a>
+          <a role="menuitem" href="#dreams" onclick="document.getElementById('nav-toggle').checked=false">Примеры снов</a>
+          <a role="menuitem" href="#contact" onclick="document.getElementById('nav-toggle').checked=false">Контакты</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===== HERO ===== -->
+  <main id="hero" class="hero" role="main">
+    <div class="container hero__grid">
+      <div>
+        <h1>Пробудись во сне</h1>
+        <p>Осознанные сновидения — это мягкая практика, которая помогает управлять сюжетом сна, творить без границ и встречать ночи с любопытством, а не со страхом.</p>
+        <a class="cta" href="#about">Начать путешествие</a>
+      </div>
+      <div class="hero__art" aria-hidden="true">
+        <div class="glow"></div>
+        <div class="artbox">
+          <div class="stars"></div>
+          <img src="https://images.unsplash.com/photo-1526318472351-c75fcf070305?q=80&w=1200&auto=format&fit=crop" alt="Атмосферное ночное небо с облаками и звездами" style="mix-blend-mode: screen; opacity:.9;" />
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===== ABOUT ===== -->
+  <section id="about" class="section">
+    <div class="container">
+      <div class="section__head">
+        <h2 class="section__title">Что такое осознанные сновидения?</h2>
+        <p class="section__lead">Коротко: момент, когда во сне понимаешь, что спишь, и можешь мягко влиять на происходящее.</p>
+      </div>
+      <div class="about">
+        <div class="about__box">
+          <p><strong>Для чего это?</strong> Осознанные сны помогают исследовать фантазии, творчески решать задачи и мягко работать с повторяющимися кошмарами.</p>
+          <ul class="about__list">
+            <li>Дневник сновидений — записывай 3–5 деталей каждое утро;</li>
+            <li>Проверки реальности — спрашивай себя днём: «Я сплю?»;</li>
+            <li>Расслабление перед сном — дыхание 4–7–8, тёплый свет;</li>
+            <li>Намерение — перед засыпанием сформулируй: «Сегодня я вспомню, что сплю».</li>
+          </ul>
+        </div>
+        <div class="about__box">
+          <p><strong>Мягкий старт за 2 недели:</strong></p>
+          <ol class="about__list" style="list-style: decimal; padding-left: 18px;">
+            <li><em>Неделя 1:</em> дневник + 3 проверки реальности в день.</li>
+            <li><em>Неделя 2:</em> добавь короткую медитацию и визуализацию сценария сна.</li>
+          </ol>
+          <p>Помни: цель — не «идеальный контроль», а любопытный и безопасный опыт.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== DREAM EXAMPLES ===== -->
+  <section id="dreams" class="section">
+    <div class="container">
+      <div class="section__head">
+        <h2 class="section__title">Примеры осознанных снов</h2>
+        <p class="section__lead">Немного вдохновения, чтобы задать направление твоим ночным сюжетам.</p>
+      </div>
+      <div class="cards">
+        <!-- Card 1 -->
+        <article class="card">
+          <span class="chip">Полёт</span>
+          <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1200&auto=format&fit=crop" alt="Парение над горами на рассвете" />
+          <h3>Парение над горами</h3>
+          <p>Сделай вдох, расправь плечи — и почувствуй поток, который держит тебя в небе. Осознавай ветер и меняй высоту одним намерением.</p>
+        </article>
+        <!-- Card 2 -->
+        <article class="card">
+          <span class="chip">Творчество</span>
+          <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop" alt="Комната с музыкой и мягким светом" />
+          <h3>Музыкальная комната</h3>
+          <p>Представь зал, где каждый предмет издаёт звук. Прикасайся к свету, смешивай мелодии и записывай идеи в дневник после пробуждения.</p>
+        </article>
+        <!-- Card 3 -->
+        <article class="card">
+          <span class="chip">Исцеление</span>
+          <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=1200&auto=format&fit=crop" alt="Тихое озеро и луна" />
+          <h3>Лунное озеро</h3>
+          <p>Сядь у воды и мягко поговори с образом страха. Поблагодари его — и смотри, как волны уносят напряжение.</p>
+        </article>
+        <!-- Card 4 -->
+        <article class="card">
+          <span class="chip">Исследование</span>
+          <img src="https://images.unsplash.com/photo-1500534623283-312aade485b7?q=80&w=1200&auto=format&fit=crop" alt="Футуристический город ночью" />
+          <h3>Ночной мегаполис</h3>
+          <p>Город, который реагирует на твоё настроение: огни становятся теплее, когда ты улыбаешься, улицы меняют маршрут по твоему замыслу.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section id="contact" class="section">
+    <div class="container">
+      <div class="section__head">
+        <h2 class="section__title">Связаться с нами</h2>
+        <p class="section__lead">Остались вопросы? Напиши — ответим в течение дня.</p>
+      </div>
+      <div class="contact">
+        <div class="contact__card">
+          <h4>Обратная связь</h4>
+          <p class="section__lead">Выбери удобный способ:</p>
+          <div>
+            <a class="contact__link" href="mailto:hello@lucid-dreams.example" aria-label="Написать на email">✉️ Email</a>
+            <a class="contact__link" href="tel:+1234567890" aria-label="Позвонить по телефону">📞 Телефон</a>
+            <a class="contact__link" href="https://t.me/your_telegram" target="_blank" rel="noopener" aria-label="Написать в Telegram">💬 Telegram</a>
+          </div>
+        </div>
+        <div class="contact__card">
+          <h4>Короткая форма</h4>
+          <form onsubmit="event.preventDefault(); alert('Спасибо! Мы получили ваше сообщение.');">
+            <div>
+              <label for="name">Имя</label>
+              <input id="name" name="name" type="text" placeholder="Ваше имя" required />
+            </div>
+            <div>
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" placeholder="name@example.com" required />
+            </div>
+            <div>
+              <label for="message">Сообщение</label>
+              <textarea id="message" name="message" placeholder="Коротко опишите вопрос" required></textarea>
+            </div>
+            <button class="btn" type="submit">Отправить</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="container foot">
+      <small>© <span id="year"></span> Пробудись во сне</small>
+      <small>Сладких и осознанных снов 🌙</small>
+    </div>
+  </footer>
+
+  <script>
+    // Пишем текущий год в футер
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Подсветка активного пункта меню при скролле (простая версия)
+    const sections = ['hero','about','dreams','contact'].map(id => document.getElementById(id));
+    const links = Array.from(document.querySelectorAll('.menu a, .menu--mobile a'));
+    const setActive = (id) => {
+      links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + id));
+    };
+    const onScroll = () => {
+      let current = 'hero';
+      const scrollY = window.scrollY + 120; // с учетом шапки
+      for (const s of sections) {
+        if (s.offsetTop <= scrollY) current = s.id;
+      }
+      setActive(current);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+  </script>
+</body>
+</html>
