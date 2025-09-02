@@ -42,3 +42,26 @@ function createStars() {
     }
 }
 createStars();
+
+// --- Обработка формы ---
+const contactForm = document.getElementById('contact-form');
+const formMessage = document.getElementById('form-message');
+
+contactForm.addEventListener('submit', (e) => {
+    e.preventDefault(); // Отменяем стандартную отправку формы
+
+    // Очищаем поля формы
+    contactForm.reset();
+
+    // Показываем сообщение об успехе
+    formMessage.textContent = 'Спасибо! Ваше сообщение успешно отправлено.';
+
+    // Можно скрыть кнопку или всю форму после отправки
+    contactForm.querySelector('button').style.display = 'none';
+
+    // Через несколько секунд сообщение может исчезнуть
+    setTimeout(() => {
+        formMessage.textContent = '';
+        contactForm.querySelector('button').style.display = 'block'; // Показываем кнопку снова
+    }, 5000); // 5 секунд
+});
